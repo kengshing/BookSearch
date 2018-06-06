@@ -50,21 +50,27 @@ public final class QueryUtils {
             JSONArray jsonItems = jsonRootObject.optJSONArray("items");
 
             for (int i = 0; i < jsonItems.length(); i++){
+                String mUrlImage;
+                String mAuthor;
                 JSONObject jsonItem = jsonItems.getJSONObject(i);
                 JSONObject jsonVolumeInfo = jsonItem.optJSONObject("volumeInfo");
                 String mTitle = jsonVolumeInfo.getString("title");
-                //Log.e(LOG_TAG, "mTitle is:" + mTitle);
+                Log.e(LOG_TAG, "mTitle is:" + mTitle);
                 JSONArray jsonAuthors = jsonVolumeInfo.optJSONArray("authors");
-                String mAuthor = jsonAuthors.getString(0);
-                //Log.e(LOG_TAG, "mAuthor is:" + mAuthor);
+                if (jsonAuthors != null){
+                    mAuthor = jsonAuthors.getString(0);
+                } else mAuthor = "No author information available";
+                Log.e(LOG_TAG, "mAuthor is:" + mAuthor);
                 JSONObject jsonImageLinks = jsonVolumeInfo.optJSONObject("imageLinks");
-                String mUrlImage = jsonImageLinks.getString("smallThumbnail");
-                //Log.e(LOG_TAG, "mUrlImage is:" + mUrlImage);
+                if (jsonImageLinks != null){
+                    mUrlImage = jsonImageLinks.getString("smallThumbnail");
+                }else mUrlImage = null;
+                Log.e(LOG_TAG, "mUrlImage is:" + mUrlImage);
                 String mUrlWeb = jsonVolumeInfo.getString("previewLink");
-                //Log.e(LOG_TAG, "mUrlWeb is:" + mUrlWeb);
+                Log.e(LOG_TAG, "mUrlWeb is:" + mUrlWeb);
 
                 books.add(new Book(mTitle, mAuthor, mUrlWeb, mUrlImage));
-                //Log.e(LOG_TAG, "item count:" + books.size());
+                Log.e(LOG_TAG, "item count:" + books.size());
             }
 
 
@@ -117,7 +123,7 @@ public final class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the book JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
