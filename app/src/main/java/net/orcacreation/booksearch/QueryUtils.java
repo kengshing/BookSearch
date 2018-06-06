@@ -55,22 +55,22 @@ public final class QueryUtils {
                 JSONObject jsonItem = jsonItems.getJSONObject(i);
                 JSONObject jsonVolumeInfo = jsonItem.optJSONObject("volumeInfo");
                 String mTitle = jsonVolumeInfo.getString("title");
-                Log.e(LOG_TAG, "mTitle is:" + mTitle);
+                //Log.e(LOG_TAG, "mTitle is:" + mTitle);
                 JSONArray jsonAuthors = jsonVolumeInfo.optJSONArray("authors");
                 if (jsonAuthors != null){
                     mAuthor = jsonAuthors.getString(0);
-                } else mAuthor = "No author information available";
-                Log.e(LOG_TAG, "mAuthor is:" + mAuthor);
+                } else mAuthor = MainActivity.getContext().getString(R.string.no_author_info); //"No author information available";
+                //Log.e(LOG_TAG, "mAuthor is:" + mAuthor);
                 JSONObject jsonImageLinks = jsonVolumeInfo.optJSONObject("imageLinks");
                 if (jsonImageLinks != null){
                     mUrlImage = jsonImageLinks.getString("smallThumbnail");
                 }else mUrlImage = null;
-                Log.e(LOG_TAG, "mUrlImage is:" + mUrlImage);
+                //Log.e(LOG_TAG, "mUrlImage is:" + mUrlImage);
                 String mUrlWeb = jsonVolumeInfo.getString("previewLink");
-                Log.e(LOG_TAG, "mUrlWeb is:" + mUrlWeb);
+               // Log.e(LOG_TAG, "mUrlWeb is:" + mUrlWeb);
 
                 books.add(new Book(mTitle, mAuthor, mUrlWeb, mUrlImage));
-                Log.e(LOG_TAG, "item count:" + books.size());
+                //Log.e(LOG_TAG, "item count:" + books.size());
             }
 
 
