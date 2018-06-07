@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mainToolbar = findViewById(R.id.toolbar_view);
         mainSearchView = findViewById(R.id.search_view);
 
+        progressBarView.setVisibility(View.GONE);
+        statusMessageView.setText(R.string.startup_message);
+
          if (mainToolbar != null) {
             setSupportActionBar(mainToolbar);
             mainToolbar.setTitle(R.string.app_name);
@@ -68,13 +71,11 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.e(LOG_TAG, "query is: " + query);
             //TO_DO: doMySearch(query);
+            googleBookRequestUrl = getString(R.string.googlebook_request_url_templete)+ query;
+            Log.e(LOG_TAG, "googleBookRequestUrl is:" + googleBookRequestUrl);
+            refreshScreen();
         }
 
-
-        googleBookRequestUrl = getString(R.string.googlebook_request_url_templete) + getString(R.string.query_test);
-        //googleBookRequestUrl = getString(R.string.googlebook_request_url_harry_potter);
-        Log.e(LOG_TAG, "googleBookRequestUrl is:" + googleBookRequestUrl);
-        refreshScreen();
     }
 
 
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         ListView bookListView = findViewById(R.id.list_view);
         bookListView.setEmptyView(findViewById(R.id.empty_list_message_view));
         statusMessageView.setText(R.string.loading_message);
+        progressBarView.setVisibility(View.VISIBLE);
 
         // Create a new {@link ArrayAdapter} of books
         mAdaptor = new BookAdaptor(this, new ArrayList<Book>());

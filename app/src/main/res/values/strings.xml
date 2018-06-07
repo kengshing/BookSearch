@@ -5,7 +5,8 @@
     <string name="googlebook_request_url_test">https://www.googleapis.com/books/v1/volumes?tbm=bks&amp;q=harry+potter&amp;key=AIzaSyDegIY48Og1XRS9plG-a-BnxLgOPLrMs9o</string>
     <string name="empty_list_message">No book record.</string>
     <string name="loading_message">Loading&#8230;</string>
-    <string name="query_test">sean+porter</string>
+    <string name="startup_message">Ready for Book Search.</string>
+    <string name="query_test">harry potter</string>
     <string name="no_internet_message">No internet connection!</string>
     <string name="api_key">AIzaSyDegIY48Og1XRS9plG-a-BnxLgOPLrMs9o</string>
     <string name="no_author_info">Author information not available.</string>
