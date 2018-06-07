@@ -9,7 +9,7 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
 
     private String mUrl;
 
-    public BookLoader(Context context, String url){
+    BookLoader(Context context, String url){
         super(context);
         mUrl = url;
     }
@@ -25,7 +25,6 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
         if (mUrl == null){
             return null;
         }
-        List<Book> result = QueryUtils.fetchEarthQuakeData(mUrl);
-        return result;
-    }
+        return QueryUtils.fetchEarthQuakeData(mUrl);
+        }
 }

@@ -1,6 +1,5 @@
 package net.orcacreation.booksearch;
 
-import android.app.LoaderManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -69,16 +68,14 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.e(LOG_TAG, "query is: " + query);
-            //TO_DO: doMySearch(query);
+            //Log.e(LOG_TAG, "query is: " + query);
+            //doMySearch(query);
             googleBookRequestUrl = getString(R.string.googlebook_request_url_templete)+ query;
             Log.e(LOG_TAG, "googleBookRequestUrl is:" + googleBookRequestUrl);
             refreshScreen();
         }
 
     }
-
-
 
     private void refreshScreen() {
 
@@ -100,14 +97,19 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Book currentBook = (Book) mAdaptor.getItem(position);
-                Uri urlWeb = Uri.parse(currentBook.getmUrlWeb());
-                Intent webIntent = new Intent(Intent.ACTION_VIEW, urlWeb);
-                startActivity(webIntent);
-            }
-        });
+                if (currentBook != null && currentBook.getmUrlWeb() != null){
+                    Uri urlWeb = Uri.parse(currentBook.getmUrlWeb());
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW, urlWeb);
+                    startActivity(webIntent);
+                }
+                }
+              });
 
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = null;
+        if (cm !=null) {
+            activeNetwork = cm.getActiveNetworkInfo();
+        }
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
@@ -118,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             progressBarView.setVisibility(View.GONE);
         }
     }
-
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
@@ -162,7 +163,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        if (searchManager != null){
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        }
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         return true;

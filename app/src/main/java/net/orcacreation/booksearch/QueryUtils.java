@@ -30,11 +30,10 @@ public final class QueryUtils {
      * parsing a JSON response.
      */
 
-    public static ArrayList<Book> extractFeatureFromJson (String bookJSON){
+    private static ArrayList<Book> extractFeatureFromJson (String bookJSON){
         if (TextUtils.isEmpty(bookJSON)){
             return null;
         }
-
         // Create an empty ArrayList that we can start adding earthquakes to
         ArrayList<Book> books = new ArrayList<>();
 
@@ -50,21 +49,25 @@ public final class QueryUtils {
             JSONArray jsonItems = jsonRootObject.optJSONArray("items");
 
             for (int i = 0; i < jsonItems.length(); i++){
-                String mUrlImage;
-                String mAuthor;
+                String mUrlImage = null;
+                String mAuthor = MainActivity.getContext().getString(R.string.no_author_info);
+                String mTitle = MainActivity.getContext().getString(R.string.no_title_info);
+
                 JSONObject jsonItem = jsonItems.getJSONObject(i);
                 JSONObject jsonVolumeInfo = jsonItem.optJSONObject("volumeInfo");
-                String mTitle = jsonVolumeInfo.getString("title");
+                if (jsonVolumeInfo.getString("title") != null){
+                mTitle = jsonVolumeInfo.getString("title");
+                }
                 //Log.e(LOG_TAG, "mTitle is:" + mTitle);
                 JSONArray jsonAuthors = jsonVolumeInfo.optJSONArray("authors");
                 if (jsonAuthors != null){
                     mAuthor = jsonAuthors.getString(0);
-                } else mAuthor = MainActivity.getContext().getString(R.string.no_author_info); //"No author information available";
+                }
                 //Log.e(LOG_TAG, "mAuthor is:" + mAuthor);
                 JSONObject jsonImageLinks = jsonVolumeInfo.optJSONObject("imageLinks");
                 if (jsonImageLinks != null){
                     mUrlImage = jsonImageLinks.getString("smallThumbnail");
-                }else mUrlImage = null;
+                }
                 //Log.e(LOG_TAG, "mUrlImage is:" + mUrlImage);
                 String mUrlWeb = jsonVolumeInfo.getString("previewLink");
                // Log.e(LOG_TAG, "mUrlWeb is:" + mUrlWeb);
@@ -77,7 +80,6 @@ public final class QueryUtils {
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the book JSON results", e);
         }
-
         return books;
     }
 
@@ -99,7 +101,6 @@ public final class QueryUtils {
      */
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
-
         // If the URL is null, then return early.
         if (url == null) {
             return jsonResponse;
@@ -176,13 +177,8 @@ public static List<Book> fetchEarthQuakeData (String requestUrl){
         Log.e(LOG_TAG, "Problem making the HTTP request.", e);
     }
 
-    //Extract relevent fields from the JSON response and create a list of (@link Book}s
-
-    List<Book> books = extractFeatureFromJson(jsonResponse);
-
-    // Return the list of {@link Book}s
-
-    return books;
+    //Extract relevant fields from the JSON response and create a list of (@link Book}s
+    return extractFeatureFromJson(jsonResponse);
  }
 
 }

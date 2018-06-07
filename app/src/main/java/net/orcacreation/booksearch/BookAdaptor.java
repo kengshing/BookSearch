@@ -23,7 +23,7 @@ import java.util.ArrayList;
 class BookAdaptor extends ArrayAdapter {
     private static final String LOG_TAG = BookAdaptor.class.getSimpleName();
 
-    public BookAdaptor(@NonNull Context context, @NonNull ArrayList<Book> books) {
+    BookAdaptor(@NonNull Context context, @NonNull ArrayList<Book> books) {
         super(context, 0, books);
     }
 
@@ -37,6 +37,10 @@ class BookAdaptor extends ArrayAdapter {
         }
 
         final Book currentBook = (Book) getItem(position);
+
+        if (currentBook == null){
+            return listView;
+        }
 
         TextView textTitleView = listView.findViewById(R.id.txt_title_view);
         textTitleView.setText(currentBook.getmTitle());

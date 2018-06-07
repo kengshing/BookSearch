@@ -10,5 +10,6 @@
     <string name="no_internet_message">No internet connection!</string>
     <string name="api_key">AIzaSyDegIY48Og1XRS9plG-a-BnxLgOPLrMs9o</string>
     <string name="no_author_info">Author information not available.</string>
+    <string name="no_title_info">Title information not available.</string>
     <string name="search_hint">Search Book</string>
 </resources>
