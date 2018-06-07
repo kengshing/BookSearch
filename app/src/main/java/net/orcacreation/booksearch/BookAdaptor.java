@@ -3,6 +3,7 @@ package net.orcacreation.booksearch;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,9 +51,12 @@ class BookAdaptor extends ArrayAdapter {
         TextView textAuthorView = listView.findViewById(R.id.txt_author_view);
         textAuthorView.setText(currentBook.getmAuthor());
 
-        //TO-DO: load cover image
         ImageView bookImageView = listView.findViewById(R.id.book_image_view);
-
+        String urlImageString = currentBook.getmUrlImage();
+        if (urlImageString !=null){
+            Uri urlImage = Uri.parse(urlImageString);
+            Picasso.get().load(urlImage).into(bookImageView);
+        }
         return listView;
     }
     }

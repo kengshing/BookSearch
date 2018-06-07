@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     public static final String LOG_TAG = MainActivity.class.getName();
     Toolbar mainToolbar;
-    SearchView mainSearchView;
     String googleBookRequestUrl;
     TextView statusMessageView;
     ProgressBar progressBarView;
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         progressBarView = findViewById(R.id.progress_bar_view);
         emptyListMessageView = findViewById(R.id.empty_list_message_view);
         mainToolbar = findViewById(R.id.toolbar_view);
-        mainSearchView = findViewById(R.id.search_view);
 
         progressBarView.setVisibility(View.GONE);
         statusMessageView.setText(R.string.startup_message);
